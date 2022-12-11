@@ -204,7 +204,15 @@ private fun SootheBottomNavigation(modifier: Modifier = Modifier) {
 // Step: MySoothe App - Scaffold
 @Composable
 fun MySootheApp() {
-    // Implement composable here
+    Column {
+        SearchBar()
+        HomeSection(text = R.string.align_your_body) {
+            AlignYourBodyRow()
+        }
+        HomeSection(text = R.string.favorite_collections) {
+            FavoriteCollectionsGrid()
+        }
+    }
 }
 
 private val alignYourBodyData = listOf(
