@@ -16,6 +16,7 @@
 
 package com.codelab.basiclayouts
 
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -204,13 +206,20 @@ private fun SootheBottomNavigation(modifier: Modifier = Modifier) {
 // Step: MySoothe App - Scaffold
 @Composable
 fun MySootheApp() {
-    Column {
-        SearchBar()
-        HomeSection(text = R.string.align_your_body) {
-            AlignYourBodyRow()
-        }
-        HomeSection(text = R.string.favorite_collections) {
-            FavoriteCollectionsGrid()
+    MySootheTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = Color(0x00FF00EAE2)
+        ) {
+            Column {
+                SearchBar()
+                HomeSection(text = R.string.align_your_body) {
+                    AlignYourBodyRow()
+                }
+                HomeSection(text = R.string.favorite_collections) {
+                    FavoriteCollectionsGrid()
+                }
+            }
         }
     }
 }
