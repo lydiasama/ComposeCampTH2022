@@ -11,7 +11,7 @@ import com.codelabs.state.step10.WellnessViewModel
 @Composable
 fun WellnessScreen(
     modifier: Modifier = Modifier,
-    viewModel: WellnessViewModel = viewModel() // hoisting
+    viewModel: WellnessViewModel = viewModel()
 ) {
     /*// Stateful
 //    WaterCounter(modifier)
@@ -25,7 +25,7 @@ fun WellnessScreen(
 
     Column(modifier = modifier) {
         StatelessCounter(
-            count = viewModel.waterCount.collectAsState().value, // encapsulate
+            count = viewModel.waterCount.collectAsState().value,
             onIncrement = viewModel::addWaterCount
         )
         WellnessTasksList(
