@@ -18,10 +18,10 @@ package androidx.compose.samples.crane.details
 
 import android.os.Bundle
 import androidx.annotation.FloatRange
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.samples.crane.R
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.google.android.libraries.maps.GoogleMap
@@ -34,12 +34,27 @@ import com.google.android.libraries.maps.MapView
 fun rememberMapViewWithLifecycle(): MapView {
     val context = LocalContext.current
     // TODO Codelab: DisposableEffect step. Make MapView follow the lifecycle
-    return remember {
+    val mapView = remember {
         MapView(context).apply {
             id = R.id.map
             onCreate(Bundle())
         }
     }
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+
+    // ใช้เพื่อเคลียร์ของ หรือใช้แล้วต้องเคลียร์หลัง clear composable
+    DisposableEffect(key1 = mapView, key2 = lifecycle) {
+        // onCreate
+        val lifecycleObserver = getMapLifecycleObserver(mapView)
+        lifecycle.addObserver(lifecycleObserver)
+
+        onDispose {
+            // onDestroy
+            lifecycle.removeObserver(lifecycleObserver)
+        }
+    }
+
+    return mapView
 }
 
 // TODO: use this
