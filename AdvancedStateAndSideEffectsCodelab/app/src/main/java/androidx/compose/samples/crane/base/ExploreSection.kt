@@ -19,21 +19,14 @@ package androidx.compose.samples.crane.base
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.samples.crane.R
 import androidx.compose.samples.crane.data.ExploreModel
 import androidx.compose.samples.crane.home.OnExploreItemClicked
-import androidx.compose.samples.crane.ui.BottomSheetShape
-import androidx.compose.samples.crane.ui.crane_caption
-import androidx.compose.samples.crane.ui.crane_divider_color
+import androidx.compose.samples.crane.ui.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -69,7 +62,13 @@ fun ExploreSection(
                 ExploreList(exploreList, onItemClicked, listState = listState)
 
                 // TODO: bad practice , use derivedStateOf
-                val showButton = listState.firstVisibleItemIndex > 0
+                val showButton by remember {
+                    derivedStateOf {
+                        // derivedStateOf เอาไว้ครอบค่า state ที่ input เยอะๆ อย่างเช่น index มีการเปลี่ยนแปลงเยอะมาก
+                        // แต่เราต้องการแค่ true/false ทำให้ลดการ recompose ได้
+                        listState.firstVisibleItemIndex > 0
+                    }
+                }
                 if (showButton) {
                     val scope = rememberCoroutineScope()
                     FloatingActionButton(
