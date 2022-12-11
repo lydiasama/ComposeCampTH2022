@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun WellnessTaskItem(
     taskName: String,
-    checked: Boolean,
+    checked: Boolean, // Stateless เพราะไม่ได้จำ state ข้างใน แต่รับมา
     onCheckedChange: (Boolean) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier
